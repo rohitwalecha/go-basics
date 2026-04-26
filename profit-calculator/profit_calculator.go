@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"example.com/profit-calculator/utilities"
+	"github.com/pallinder/go-randomdata"
+)
 
 // Go profit calcultor using approach elaborating using of functions and return types
 func main() {
@@ -9,11 +14,18 @@ func main() {
 	expenses := scanInput("Enter expenses : ")
 	taxRate := scanInput("Enter taxRate : ")
 
-	ebt, profit, ratio := calculateExpenses(revenue, expenses, taxRate)
+	//Read file from utility package
+	detailsText, err := utilities.ReadDetailsFromFile("profit-details.txt")
+	if err != nil {
+		fmt.Print("Error While reading file but still continuing execution !!")
+	}
+	fmt.Printf("Details in the file : %s\n", detailsText)
 
-	fmt.Printf("Earnings Before Tax : %.2f\n", ebt)
-	fmt.Printf("Profit : %.2f\n", profit)
-	fmt.Printf("Ratio EBT/Profit : %.2f\n", ratio)
+	ebt, profit, ratio := calculateExpenses(revenue, expenses, taxRate)
+	//Write to file via utility package
+	utilities.WriteDetailsToFile(ebt, profit, ratio, "profit-details.txt")
+
+	fmt.Printf("Faltu ka phone number %s\n", randomdata.PhoneNumber())
 
 }
 
