@@ -30,6 +30,7 @@ func (user *User) setFirstName(firstName string) {
 	user.firstName = firstName
 }
 
+// This setter method would not mutate the value of the actual struct on which this method is called instead it will create a copy and do changes in the copy
 func (user User) setFirstNameWithoutMutation(firstName string) {
 	user.firstName = firstName
 }
@@ -69,4 +70,5 @@ func main() {
 	appUser.setFirstName("Basant")
 	fmt.Println("Setting appUser.firstName to Basant without mutation of actual value using pointer dereference")
 	appUser.getUserDetails() // Priting to check if actual value of appUser.firstName changed or nots
+
 }
