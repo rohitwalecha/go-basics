@@ -20,6 +20,20 @@ type Mobile struct {
 	numberType  string
 }
 
+// Here as we are just printing the values not mutating them so recieving them as a pointer dereferece is not mandatory but can be used here as well
+func (user User) getUserDetails() {
+	fmt.Printf("User Details are : %s %s %s\n", user.firstName, user.lastName, user.birthddate)
+}
+
+// Mutuation or Setter methods should take refernces of Reciever arguments as a pointer dereference i.e "*User"
+func (user *User) setFirstName(firstName string) {
+	user.firstName = firstName
+}
+
+func (user User) setFirstNameWithoutMutation(firstName string) {
+	user.firstName = firstName
+}
+
 func main() {
 	//Initialising values to be put in User and Mobile Struct
 	userFirstName := "Rohit"
@@ -45,5 +59,14 @@ func main() {
 		mobile:     userMobile,
 	}
 
-	fmt.Println(appUser)
+	fmt.Println(appUser)     // Priting the struct as it is
+	appUser.getUserDetails() // Priting using getter method which is attached to sturct appUser
+
+	appUser.setFirstNameWithoutMutation("Basant")
+	fmt.Println("Setting appUser.firstName to Basant without mutation of actual value not using pointer dereference")
+	appUser.getUserDetails() // Priting to check if actual value of appUser.firstName changed or not
+
+	appUser.setFirstName("Basant")
+	fmt.Println("Setting appUser.firstName to Basant without mutation of actual value using pointer dereference")
+	appUser.getUserDetails() // Priting to check if actual value of appUser.firstName changed or nots
 }
