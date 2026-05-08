@@ -1,0 +1,3 @@
+Earnings Before Tax : 2300.00
+Profit : 2231.00
+Ratio EBT/Profit : 1.03
