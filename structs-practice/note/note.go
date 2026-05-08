@@ -1,33 +1,49 @@
 package note
 
-import "errors"
+import (
+	"encoding/json"
+	"errors"
+	"os"
+	"strings"
+)
 
 type Note struct {
-	noteTile    string
-	noteContent string
+	NoteTitle   string
+	NoteContent string
 }
 
-func (note *Note) setNoteTitle(noteTitle string) {
-	note.noteTile = noteTitle
+func (note *Note) SetNoteTitle(noteTitle string) {
+	note.NoteTitle = noteTitle
 }
 
-func (note *Note) getNoteTitle() string {
-	return note.noteTile
+func (note Note) GetNoteTitle() string {
+	return note.NoteTitle
 }
 
-func (note *Note) setNoteContent(noteContent string) {
-	note.noteContent = noteContent
+func (note *Note) SetNoteContent(noteContent string) {
+	note.NoteContent = noteContent
 }
 
-func (note *Note) getNoteContent() string {
-	return note.noteTile
+func (note Note) GetNoteContent() string {
+	return note.NoteContent
 }
 
-func New(noteTile string, noteContent string) (*Note, error) {
-	if noteTile == "" || noteContent == "" {
+func New(noteTitle string, noteContent string) (*Note, error) {
+	if noteTitle == "" || noteContent == "" {
 		return nil, errors.New("noteTitle and noteContent both are mandatory !!")
 	}
 	return &Note{
-		noteTile, noteContent,
+		NoteTitle:   noteTitle,
+		NoteContent: noteContent,
 	}, nil
+}
+
+func (note Note) Save() error {
+	fileName := strings.ReplaceAll(note.NoteTitle, " ", "_")
+	fileName = strings.ToLower(fileName) + ".json"
+	json, err := json.Marshal(note) // Marshal function returns an Error object as well so check and return it in case the parsing/marshal fails
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(fileName, json, 0644) // Same with this method this also returns an error object
 }
