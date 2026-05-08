@@ -36,7 +36,7 @@ func getNote() (*note.Note, error) {
 func getUserInput(prompt string) (string, error) {
 	fmt.Print(prompt)
 	reader := bufio.NewReader(os.Stdin)
-	inputValue, err := reader.ReadString('\n')
+	inputValue, err := reader.ReadString('\n') // used here to take users buffered input in continuation with spaces as well
 	if err != nil {
 		return "", err
 	}

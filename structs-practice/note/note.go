@@ -8,8 +8,8 @@ import (
 )
 
 type Note struct {
-	NoteTitle   string
-	NoteContent string
+	NoteTitle   string `json:"note_title"`
+	NoteContent string `json:"note_content"`
 }
 
 func (note *Note) SetNoteTitle(noteTitle string) {
